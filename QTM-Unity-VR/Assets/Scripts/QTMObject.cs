@@ -27,19 +27,22 @@ public class QTMObject : MonoBehaviour
     void Update() {
         if (updateTimer > 0) updateTimer -= Time.deltaTime;
 
-        if (updateTimer <= 0 && rtClient.GetStreamingStatus()) {
+        if (rtClient.GetStreamingStatus()) {
             SixDOFBody trackedObj = rtClient.GetBody(objectName);
+
             if (!float.IsNaN(trackedObj.Position.sqrMagnitude)) {
                 transform.position = trackedObj.Position * 3;
+                // Debug.Log(trackedObj.Rotation);
+                // if (updateTimer <= 0) {
+                    if (ShouldOffsetRotation) {
+                        transform.rotation = trackedObj.Rotation * Quaternion.Euler(rotationOffset);
+                    } else {
+                        transform.rotation = trackedObj.Rotation;
+                    }
 
-                if (ShouldOffsetRotation) {
-                    transform.rotation = trackedObj.Rotation * Quaternion.Euler(rotationOffset);
-                } else {
-                    transform.rotation = trackedObj.Rotation;
-                }
+                //     updateTimer = updateWindow;
+                // }
             }
-
-            updateTimer = updateWindow;
         }
     }
 }

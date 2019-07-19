@@ -31,9 +31,4 @@ public class QTMConnector : MonoBehaviour
             rtClient.Connect(server, 4545, true, true, false, false, false, false);
         }
     }
-
-    // Update is called once per frame
-    void Update() {
-        
-    }
 }
