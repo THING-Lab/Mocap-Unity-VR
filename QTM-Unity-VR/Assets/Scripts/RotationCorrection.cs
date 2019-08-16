@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class RotationCorrection : MonoBehaviour
 {
-    public Transform rotationSource;
-    public QTMObject outputTarget;
+    public GameObject QTMCamera;
+    public GameObject accelCamera;
+
+    public float lerpSpeed;
 
     // Update is called once per frame
     void Update() {
-        outputTarget.rotationOffset = Quaternion.Inverse(rotationSource.localRotation).eulerAngles;
+        Quaternion A = QTMCamera.transform.rotation * Quaternion.Inverse(accelCamera.transform.localRotation);
+        transform.rotation = Quaternion.Lerp(transform.rotation, A, lerpSpeed);
+        transform.position = QTMCamera.transform.position;
     }
 }

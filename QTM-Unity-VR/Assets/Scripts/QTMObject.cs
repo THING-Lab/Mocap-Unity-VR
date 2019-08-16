@@ -9,13 +9,7 @@ using QualisysRealTime.Unity;
 public class QTMObject : MonoBehaviour
 {
     public string objectName;
-    public Vector3 rotationOffset;
-    public float updateWindow = 0f;
     private float updateTimer = 0f;
-
-    private bool ShouldOffsetRotation {
-        get { return !(rotationOffset.x == 0 && rotationOffset.y == 0 && rotationOffset.z == 0); }
-    }
 
     private RTClient rtClient;
     // Start is called before the first frame update
@@ -32,16 +26,7 @@ public class QTMObject : MonoBehaviour
 
             if (!float.IsNaN(trackedObj.Position.sqrMagnitude)) {
                 transform.position = trackedObj.Position * 3;
-                // Debug.Log(trackedObj.Rotation);
-                // if (updateTimer <= 0) {
-                    if (ShouldOffsetRotation) {
-                        transform.rotation = trackedObj.Rotation * Quaternion.Euler(rotationOffset);
-                    } else {
-                        transform.rotation = trackedObj.Rotation;
-                    }
-
-                //     updateTimer = updateWindow;
-                // }
+                transform.rotation = trackedObj.Rotation;
             }
         }
     }
